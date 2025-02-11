@@ -1,46 +1,54 @@
 <?php
 namespace App\Repositories;
-require_once __DIR__.'/../models/Article.php';
-use PDO;
+
 use App\core\Database;
-use Article;
+use App\Repositories\ArticlerepositoriesInterface;
+use App\Model\Article;
+use PDO;
+use PDOStatement;
 
- class ArticleRepository implements ArticleRepositoryInterface
- {
-    use Database;
 
-    public function get($id):?Article {
-        $stmt = $this->getConnection()->prepare("SELECT * FROM Articles WHERE id = :id");
-        $stmt->execute(['id' => $id]);
-        $row = $stmt->fetch(PDO::FETCH_OBJ);
+class Articlerepository implements ArticlerepositoryInterface{
 
-        return $row = $row ? new Article($row->id, $row->title ,$row->content) : null;
+use Database;
 
+public function save(Article $article){
+
+$message = '';
+$stmt = $this->getConnection()->prepare('INSERT INTO public.articles(title,content)
+VALUES(:title,:content)');
+
+if($stmt->execute([
+    'title'=> $article->getTitle(),
+    'content'=> $article->getContent()
+])){
+
+    return $message= 'article is added';
+
+}
+
+}
+
+
+public function get($id){
+    
+    $stmt = $this->getConnection()->prepare("SELECT * FROM public.articles WHERE id= :id");
+
+    $stmt->execute(['id'=>$id]);
+
+    $row = $stmt->fetchObject(Article::class);
+    return $row;
+
+
+}
+
+public function delete($id){
+
+    $messagedel = '';
+    $stmt = $this->getConnection()->prepare("DELETE FROM public.articles WHERE id = :id");
+    
+    if($stmt->execute(['id'=>$id])){
+        return $messagedel = 'article deleted';
     }
-
-    public function save(Article $article) {
-        $message = '';
-        $stmt = $this->getConnection()->prepare("INSERT INTO public.articles (title, content) VALUES (:title, :content)");
-
-        if($stmt->execute([
-            'title' => $article->getTitle(),
-            'content' => $article->getContent()
-        ])){
-            $message = 'article added with success';
-        }
-        
-        return $message;
-    }
-
-    public function delete($id) 
-    {
-        $succes = '';
-        $stmt = $this->getConnection()->prepare("DELETE FROM public.articles WHERE id = :id");
-        if($stmt->execute([$id])){
-            $succes = 'succefully deleted';
-        }
-
-        return $succes;
-
-    }
+}
 }

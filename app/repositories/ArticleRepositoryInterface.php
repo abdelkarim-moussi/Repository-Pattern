@@ -1,11 +1,11 @@
 <?php
 namespace App\Repositories;
 
-use Article;
-require_once __DIR__."/../Models/Article.php";
+use App\Model\Article;
 
-interface ArticleRepositoryInterface {
-    public function get($id):?Article;
-    public function save(Article $book);
+interface ArticlerepositoryInterface{
+    public function get($id);
+    public function save(Article $article);
     public function delete($id);
+
 }
