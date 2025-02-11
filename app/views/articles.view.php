@@ -1,1 +1,27 @@
-<h1>articles view</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repository Pattern</title>
+</head>
+<body>
+
+<div>
+<?php if(!empty($data['delete'])){
+    echo $data['delete'];
+}
+if(!empty($data['message'])){
+    echo $data['message'];
+}
+?>
+</div>
+
+<div>
+    <?php
+    show($data['article']);
+    ?>
+</div>
+    
+</body>
+</html>

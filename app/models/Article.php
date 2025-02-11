@@ -1,16 +1,14 @@
 <?php
-namespace App\Models;
-
 class Article
 {
-    private $id_article;
-    private $title;
-    private $content;
+    public $id;
+    public $title;
+    public $content;
 
-    public function __contruct($id_article,$title,$content)
+    public function __construct($id,$title,$content)
     {
 
-        $this->id_article = $id_article;
+        $this->id = $id;
         $this->title = $title;
         $this->content = $content;
 
@@ -18,10 +16,10 @@ class Article
 
     //getters and setters
     public function getIdArticle(){
-        return $this->id_article;
+        return $this->id;
     }
-    public function setIdArticle($id_article){
-        return $this->id_article = $id_article;
+    public function setIdArticle($id){
+        return $this->id = $id;
     }
 
 
